@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>hello</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+	<div class='container'>
+		
+    <h1 data-bind="text : lable">Tables</h1>
+
+  <div class='navbar' data-bind='foreach : tables'>
+		<div class="navbar-inner" style='margin-top: 10px'>
+
+      <a class="brand" href="#" data-bind="text : name"></a>
+
+  <!-- ko if: free() == true -->
+      <button data-bind="click : $parent.reserve" class="btn btn-warning" style=' float: right' >Занять</button>
+ <!-- /ko -->
+  <!-- ko if: free() == false -->
+ 
+      <button data-bind="click : $parent.serve" class="btn btn-inverse" style=' float: right' >Счет</button>
+<!-- /ko -->
+ 
+    </div>
+	</div>
+  <div class="btn-group" data-toggle="buttons-radio">
+    <button data-bind="click : free, css :{ 'active' : is_free() == true }" type="button" class="btn btn-large btn-success">Свободные</button>
+    <button data-bind="click : not_free, css :{ 'active' : is_free() == false }" type="button" class="btn btn-large btn-warning">Занятые</button>
+  </div>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.3/knockout.mapping.js"></script>
+       <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
