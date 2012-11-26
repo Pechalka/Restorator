@@ -55,7 +55,7 @@ $(function() {
 	};
 
 
-	function MenuViewModel(model){
+	function CategoriesViewModel(model){
 		var self = this;
 		self.category = ko.observableArray(model);
 		
@@ -81,32 +81,49 @@ $(function() {
 		}
 
 		self.edit = function(item){
-			alert(item._id);
+			window.app.showMenu(item._id);
 		};
 	};
 
+	function MenuViewModel(model){
+		var self = this;
+		self.dishes = ko.observableArray(model);
+	}
 
-	var app = {
+
+	window.app = {
 		tables : ko.observable(null),
 		menu : ko.observable(null),
+		categories : ko.observable(null),
 		currentPage : ko.observable('tables'),
 		showTables : function(){
 			var self = this;
 			$.get('/api/tables', function(data){
 				self.tables(new TableViewModel(data));
+				self.categories(null);
 				self.menu(null);
 				self.currentPage('tables');
 			});				
 		},
-		showMenu : function(){
+		showCategories : function(){
 			var self = this;
 			$.get('/api/categories', function(data){
 				self.tables(null);
-				self.menu(new MenuViewModel(data));
+				self.categories(new CategoriesViewModel(data));
+				self.menu(null);
 				self.currentPage('menu');
-			});
+			});			
+		},		
+		showMenu : function(id){
+			var self = this;
+			self.tables(null);
+			self.categories(null);
 			
-		}			
+			self.currentPage('menu');
+			$.get('/api/categories/' + id, function(data){
+				self.menu(new MenuViewModel(data));
+			})	
+		}
 	};
 	
 	ko.applyBindings(app);

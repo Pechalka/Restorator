@@ -17,13 +17,19 @@ var TableSchema = new Schema({
 	free : { type : Boolean, default : true }
 });
 
+var DishSchema =  new Schema({
+	name : String,
+	price : String
+});
+
 var CategorySchema = new Schema({
-	name : String
+	name : String,
+	dishes : [DishSchema]
 });
 
 
 var Table = mongoose.model('Tables', TableSchema);
-var Category = mongoose.model('Categories', TableSchema);
+var Category = mongoose.model('Categories', CategorySchema);
 
 mongoose.connect('mongodb://localhost/Restoran');
 
@@ -31,11 +37,6 @@ app.on('close', function(error){
 	mongoose.disconnect();
 });
 
-
-
-app.get('/api/test', function(req, res){	
-	res.json(200, { test : 'test'})
-});
 
 
 app.get('/api/tables', function(req, res){	
@@ -61,6 +62,14 @@ app.get('/api/categories', function(req, res){
 	});
 });
 
+app.get('/api/categories/:id', function(req, res){
+	Category.findOne({ _id : req.params.id }, 
+		function(err, category){
+			res.json(200, category.dishes);		
+		}
+	);
+});
+
 
 app.post('/api/remove_category', function(req, res){	
 	Category.findOne({ _id : req.body.id }, 
@@ -72,9 +81,12 @@ app.post('/api/remove_category', function(req, res){
 });
 
 app.post('/api/add_category', function(req, res){	
-	var с = new Category(req.body);
-	с.save(function(err, data){
-		res.json(200, data);	
+	var category = new Category(req.body);
+
+	category.dishes.push({ name : 'vodka', price : '10$'});
+	category.save(function(err, data){
+
+		res.json(200, data);
 	});
 });
 
