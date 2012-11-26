@@ -71,6 +71,42 @@ app.get('/api/categories/:id', function(req, res){
 });
 
 
+app.post('/api/add_dish', function(req, res){
+	Category.findOne({ _id : req.body.category_id }, 
+		function(err, category){
+			category.dishes.push(req.body);
+			category.save();	
+
+			res.json(200, req.body);					
+		}
+	);
+});
+
+
+app.post('/api/remove_dish', function(req, res){
+	Category.findOne({ _id : req.body.category_id }, 
+		function(err, category){
+			var index = -1;
+			for (var i = 0; i < category.dishes.length; i++) {
+				if (category.dishes[i]._id == req.body.id){
+					index = i;
+					break;
+				}
+			};
+
+			if (index != -1){
+				category.dishes[index].remove();
+				category.save();	
+			}
+			else{
+				console.log('fuck you mongoose');
+			}
+
+			res.json(200, req.body);	
+		}
+	);
+});
+
 app.post('/api/remove_category', function(req, res){	
 	Category.findOne({ _id : req.body.id }, 
 		function(err, item){
@@ -81,9 +117,7 @@ app.post('/api/remove_category', function(req, res){
 });
 
 app.post('/api/add_category', function(req, res){	
-	var category = new Category(req.body);
-
-	category.dishes.push({ name : 'vodka', price : '10$'});
+	var category = new Category(req.body);	
 	category.save(function(err, data){
 
 		res.json(200, data);
