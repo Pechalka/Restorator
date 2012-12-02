@@ -13,58 +13,10 @@
     <li><a href="#">Счета</a></li>
   </ul>
 
-  <div data-bind="with : tables">      
-  <form class="well form-search">
-    <div class="input-append">
-      <input class="span6" style="height : 30px;" type="text" data-bind="value : newTable, enterKey : add">
-      <button class="btn btn-success"  data-bind="click : add" type="button">Добавить столик</button>
-    </div>
-  </form>    
-
-    <div class='navbar' data-bind='foreach : tables'>
-        <div class="navbar-inner" style='margin-top: 10px'>
-                    <a class="brand" href="#" data-bind="text : name"></a>
-          <button data-bind="click : $parent.remove" class="close" style='margin-top: 10px'>&times;</button>
-        </div>
-    </div>
-  </div>
-
-
-<div data-bind="with : categories">
-    <form class="well form-search">
-    <div class="input-append">
-      <input class="span6" style="height : 30px;" type="text" data-bind="value : newItem, enterKey : add">
-      <button class="btn btn-success"  data-bind="click : add" type="button">Добавить категорию</button>
-    </div>
-  </form>
-  <div class='navbar' data-bind='foreach : category'>
-        <div class="navbar-inner" style='margin-top: 10px'>
-          <a class="brand" href="#" data-bind="text : name, click : $parent.edit"></a>
-          <button data-bind="click : $parent.remove" class="close" style='margin-top: 10px'>&times;</button>
-        </div>
-    </div>  
+<div data-bind="with : content">      
+<!-- ko template:{ html: html, data : data} -->
+<!-- /ko -->
 </div>
-
-
-<div data-bind="with : menu">
-      <form class="well form-search">
-    <div class="input-append">
-      <input class="span6" style="height : 30px;" type="text" data-bind="value : newItem, enterKey : add">
-      <button class="btn btn-success"  data-bind="click : add" type="button">Добавить блюдо</button>
-    </div>
-  </form>
-  <div class='navbar' data-bind='foreach : dishes'>
-        <div class="navbar-inner" style='margin-top: 10px'>
-          <a class="brand" href="#" data-bind="text : name"></a>
-          <button class="close" data-bind="click : $parent.remove" style='margin-top: 10px'>&times;</button>
-        </div>
-    </div>
-</div>
-
-</div>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
-       <script type="text/javascript" src="admin.js"></script>
+<script data-main="/main" src="libs/require.js" type="text/javascript"></script>
 </body>
 </html>

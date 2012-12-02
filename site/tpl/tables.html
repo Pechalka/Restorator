@@ -1,0 +1,7 @@
+<form class="well form-search"><div class="input-append"><input class="span6" style="height : 30px;" type="text" data-bind="value : newTable, enterKey : add">
+			<button class="btn btn-success"  data-bind="click : add" type="button">Добавить столик</button>
+    		</div></form><div class="navbar" data-bind="foreach : tables">
+        	<div class="navbar-inner" style="margin-top: 10px">
+            <a class="brand" href="#" data-bind="text : name"></a>
+          	<button data-bind="click : $parent.remove" class="close" style="margin-top: 10px">&times;</button>
+        	</div></div>
