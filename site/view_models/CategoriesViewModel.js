@@ -25,7 +25,7 @@ define(["knockout", "jquery"],function(ko, $) {
 		}
 
 		self.edit = function(item){
-			window.app.showMenu(item._id);
+			window.location = '#menu/' +  item._id;
 		};
 	};
 });	

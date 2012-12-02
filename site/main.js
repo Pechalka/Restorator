@@ -4,7 +4,8 @@ require.config({
         "jquery": "/libs/jquery-latest",
         "knockout": "/libs/knockout-min",
         "text": "/libs/text",
-        "stringTemplateEngine": "/libs/stringTemplateEngine"
+        "stringTemplateEngine": "/libs/stringTemplateEngine",
+        "sammy" : "/libs/sammy-latest.min"
     },
     shim: {
         "stringTemplateEngine": ["knockout"]
@@ -21,10 +22,15 @@ require([
     "libs/enterKey",
     "stringTemplateEngine"
 
-    ], function(ko, $, App){
+    ], function(ko, $, App, Sammy){
 		$(function() {
-			window.app = new App();
+			window.app = App;
+			
 			ko.applyBindings(app);
-			app.showTables();
+
+			app.run();
 		});
+
+
+	
 });

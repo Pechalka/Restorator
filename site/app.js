@@ -7,7 +7,9 @@ define(["knockout", "jquery",
 
     "view_models/TableViewModel",
     "view_models/CategoriesViewModel",
-    "view_models/MenuViewModel"
+    "view_models/MenuViewModel",
+
+    "sammy"
 
 	],function(ko, $, 
 
@@ -17,52 +19,57 @@ define(["knockout", "jquery",
 
     	TableViewModel,
     	CategoriesViewModel,
-		MenuViewModel) {
-	return function(){
-		var self = this;
+		MenuViewModel,
 
-		self.content = ko.observable(null), 
-		self.currentPage = ko.observable('tables'),
-	
-		self.showTables = function(){			
-			var self = this;
-			self.currentPage('tables');
+
+		Sammy) {
+		
+	return Sammy(function(){
+		var app = this;
+
+		app.content = ko.observable(null), 
+		app.currentPage = ko.observable('tables'),
+
+        this.get('#tables', function () {
+        	app.currentPage('tables');
 			$.get('/api/tables', function(data){
-				self.content(
+				app.content(
 					{
 						html : tables_tpl,
 						data : new TableViewModel(data)
 					}
 				);
-			});				
-		};
+			});
+        });
 
-		self.showCategories = function(){
-			var self = this;
-			self.currentPage('menu');
+        this.get('#categories', function () {
+        	app.currentPage('menu');
 			$.get('/api/categories', function(data){
-				self.content(
+				app.content(
 					{
 						html : categories_tpl,
 						data : new CategoriesViewModel(data)
 					}
 				);
-			});			
-		};
-
-		self.showMenu = function(id){
-			var self = this;
-			self.currentPage('menu');
+			});	
+        });
+        this.get('#menu/:id', function () {
+        	var id = this.params.id;
+        	app.currentPage('menu');
 			$.get('/api/categories/' + id, function(data){
 				data.category_id = id; 
-				self.content(
+				app.content(
 					{
 						html : menu_tpl,
 						data : new MenuViewModel(data)
 					}
 				);
 			})	
-		};
+        });
 
-	};
+        this.get('', function () {
+        	window.location = '#tables';
+        });
+
+	});
 });		
