@@ -30,7 +30,7 @@ define(["knockout", "jquery",
 		app.content = ko.observable(null), 
 		app.currentPage = ko.observable('tables'),
 
-        this.get('#tables', function () {
+        this.get('admin.html#tables', function () {
         	app.currentPage('tables');
 			$.get('/api/tables', function(data){
 				app.content(
@@ -42,7 +42,7 @@ define(["knockout", "jquery",
 			});
         });
 
-        this.get('#categories', function () {
+        this.get('admin.html#categories', function () {
         	app.currentPage('menu');
 			$.get('/api/categories', function(data){
 				app.content(
@@ -53,7 +53,7 @@ define(["knockout", "jquery",
 				);
 			});	
         });
-        this.get('#menu/:id', function () {
+        this.get('admin.html#menu/:id', function () {
         	var id = this.params.id;
         	app.currentPage('menu');
 			$.get('/api/categories/' + id, function(data){
@@ -67,8 +67,8 @@ define(["knockout", "jquery",
 			})	
         });
 
-        this.get('', function () {
-        	window.location = '#tables';
+        this.get('admin.html', function () {
+        	window.location = 'admin.html#tables';
         });
 
 	});

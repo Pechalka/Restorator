@@ -1,8 +1,9 @@
-<form class="well form-search">
+<div class="well form-search">
 <div class="input-append">
 	<input class="span6" style="height : 30px;" type="text" data-bind="value : newItem, enterKey : add">
 	<button class="btn btn-success"  data-bind="click : add" type="button">Добавить блюдо</button>
-</div></form><div class="navbar" data-bind="foreach : dishes">
+</div></div>
+<div class="navbar" data-bind="foreach : dishes">
 <div class="navbar-inner" style="margin-top: 10px">
 <a class="brand" href="#" data-bind="text : name"></a>
 	<button class="close" data-bind="click : $parent.remove" style="margin-top: 10px">&times;</button>
