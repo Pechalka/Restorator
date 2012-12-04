@@ -1,0 +1,190 @@
+<html>
+<head>
+	<title>admin</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+ <div class='container'>
+    <ul class="nav nav-pills" style="font-size: 20px">
+    <li >
+      <a href="#tables" >Столики</a>
+    </li>
+    <li class="active"><a href="#categories" >Меню</a></li>
+    <li><a href="#">Счета</a></li>
+  </ul>
+
+<div >      
+	<div class="well form-search">
+		<span style="font-size: 20px">Категория </span>
+			<select class="span6">
+                <option>Холодные закуски</option>
+                <option>Салаты</option>
+                <option>Горячие закуски</option>
+                <option>Мясные блюда</option>
+                <option>Гарниры</option>
+                <option>Горячие блюда из  рыбы</option>
+                <option>Десерты</option>
+                <option>Мороженое</option>
+				<option>Фрукты</option>
+              </select>
+
+              <div class="btn-group ">
+              <a  class="btn btn-success " id="add-dish" data-toggle="modal" href="#myModal">добавить</a><a  class="btn btn-danger disabled" id="delete-dish" >удалить</a>
+              
+              
+            </div>
+	</div>
+<div class="navbar" >
+	<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">"Ницца" с тунцом и анчоусами</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+	<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">"Цезарь" с тигровыми креветками</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+	<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Легкий Норвежский салат из лосося с авокадо</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+		<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">"Цезарь" классический</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+		<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Пикантный салатик с ломтиками телятины в кунжуте</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+			<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Теплый салат с индейкой, красным виноградом и веточкой розмарина</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+			<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Салат с грецкими орехами, карамелизированной грушей и сыром пекорино</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+			<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Салат с белыми грибами и proscuitto di Parmа</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+			<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Салат с proscuitto di Parmа, черешней и мятой</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+			<div class="navbar-inner" style="margin-top: 10px">
+		<a class="brand" data-toggle="modal" href="#myModal2" href="#">Салат с медальонами из свинины в пряной глазури</a>
+		<button class="close" style="margin-top: 10px">&times;</button>
+	</div>
+</div>
+<div>
+	<div class="span7 pagination pagination-large">
+	              <ul>
+	                <li><a href="#">1</a></li>
+	                <li><a href="#">2</a></li>
+	                <li><a href="#">3</a></li>
+	                <li><a href="#">4</a></li>
+	                <li><a href="#">5</a></li>
+	             </ul>
+	</div>
+	<a class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  
+</div>  
+</div>
+</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Новая категория</h3>
+            </div>
+            <div class="modal-body form-horizontal"> 
+<div class="control-group">
+            <label class="control-label" for="txt_email">Название </label>
+            <div class="controls">
+                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название категории" maxlength="30" >
+            </div>
+        </div>
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal">Не создовать</button>
+              <button class="btn btn-primary btn-success disabled">Создать</button>
+            </div>
+</div>
+
+<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Новое блюдо</h3>
+            </div>
+            <div class="modal-body form-horizontal"> 
+
+
+<div class="control-group">
+            <label class="control-label" for="txt_email">Название</label>
+            <div class="controls">
+                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название" maxlength="30" >
+            </div>
+        </div>
+
+<div class="control-group">
+            <label class="control-label" for="txt_email">Цена</label>
+            <div class="controls">
+                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Цена" maxlength="30" >
+            </div>
+        </div>
+
+<div class="control-group">
+            <label class="control-label" for="txt_email">Описание</label>
+            <div class="controls">
+                <textarea rows="3"></textarea>
+            </div>
+        </div>
+
+<div class="control-group">
+            <label class="control-label" for="txt_email">Категория</label>
+            <div class="controls">
+                <select >
+                <option>Холодные закуски</option>
+                <option>Салаты</option>
+                <option>Горячие закуски</option>
+                <option>Мясные блюда</option>
+                <option>Гарниры</option>
+                <option>Горячие блюда из  рыбы</option>
+                <option>Десерты</option>
+                <option>Мороженое</option>
+				<option>Фрукты</option>
+              </select>
+            </div>
+        </div>
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal">Не создовать</button>
+              <button class="btn btn-primary btn-success disabled">Создать</button>
+            </div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<!-- 
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.3/bootstrap.min.js"></script>
+
+ --> 
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+$(function(){
+
+$('body').tooltip({
+	title : 'нельяз удалить категорию,<br/> сначало удалите все блюда', placement: 'bottom', html : true ,
+    selector: '#delete-dish.disabled'
+});
+
+
+	$('#add-dish').click(function(){
+		$('#delete-dish').toggleClass('disabled');
+	});
+});
+</script>
+</body>
+</html>
