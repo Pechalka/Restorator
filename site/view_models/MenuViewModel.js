@@ -1,41 +1,19 @@
-define(["knockout", "jquery"],function(ko, $) {
+define(["knockout", "jquery", "ko.mapping"],function(ko, $, mapping) {
 	return function(model){
 		var self = this;
-		self.dishes = ko.observableArray(model);
-		self.newItem = ko.observable('');
-		self.category_id = model.category_id;
-
-		self.add = function(){
-			if (self.newItem() == ''){
-				alert('введите название блюда, блять!');
-				return;
-			}
-
-			$.post(
-				'/api/add_dish', 
-				{ 
-					category_id : self.category_id, 
-					name :  self.newItem(), 
-					price : '10$'
-				}, 
-				function(newItem){
-					self.dishes.push(newItem);
-					self.newItem('');
-				}
-			);
-		}
+		
+		self.categories = ko.observableArray(model.categories);
+		self.dishes = ko.observableArray(model.dishes);
+		self.chosen_category = ko.observable(model.categories[0]);
 
 		self.remove = function(item){
-			$.post(
-				'/api/remove_dish', 
-				{ 
-					category_id : self.category_id, 
-					id :  item._id
-				}, 
-				function(){
-					self.dishes.remove(item);
-				}
-			);
+			self.dishes.remove(item);			
 		}
+
+		self.remove_dish = function(){
+			if (self.dishes().length == 0) return;
+
+			alert('remove_dish');
+		};
 	}
 });		

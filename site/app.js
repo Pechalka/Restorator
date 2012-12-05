@@ -2,11 +2,9 @@ define(["knockout", "jquery",
 
 
     "text!/tpl/tables.html",
-    "text!/tpl/categories.html",
     "text!/tpl/menu.html",
 
     "view_models/TableViewModel",
-    "view_models/CategoriesViewModel",
     "view_models/MenuViewModel",
 
     "sammy"
@@ -14,11 +12,9 @@ define(["knockout", "jquery",
 	],function(ko, $, 
 
 		tables_tpl, 
-		categories_tpl, 
 		menu_tpl, 
 
     	TableViewModel,
-    	CategoriesViewModel,
 		MenuViewModel,
 
 
@@ -42,30 +38,43 @@ define(["knockout", "jquery",
 			});
         });
 
-        this.get('admin.html#categories', function () {
-        	app.currentPage('menu');
-			$.get('/api/categories', function(data){
-				app.content(
-					{
-						html : categories_tpl,
-						data : new CategoriesViewModel(data)
-					}
-				);
-			});	
+
+        this.get('admin.html#menu', function(){
+			app.currentPage('menu');
+
+			var model = {
+				categories : [
+					"Холодные закуски",
+	                "Салаты",
+	                "Горячие закуски",
+	                "Мясные блюда",
+	                "Гарниры",
+	                "Горячие блюда из  рыбы",
+	                "Десерты",
+	                "Мороженое",
+					"Фрукты"
+				],
+				dishes : [
+					{ name : '"Ницца" с тунцом и анчоусами'}, 
+					{ name : '"Цезарь" с тигровыми креветками'},
+					{ name : 'Легкий Норвежский салат из лосося с авокадо'},
+					{ name : '"Цезарь" классический'},
+					{ name : 'Пикантный салатик с ломтиками телятины в кунжуте'},
+					{ name : 'Теплый салат с индейкой, красным виноградом и веточкой розмарина'},
+					{ name : 'Салат с грецкими орехами, карамелизированной грушей и сыром пекорино'},
+					{ name : 'Салат с белыми грибами и proscuitto di Parmа'},
+					{ name : 'Салат с proscuitto di Parmа, черешней и мятой'},
+					{ name : 'Салат с медальонами из свинины в пряной глазури'}
+				]
+			};
+
+
+        	app.content({
+        		html : menu_tpl,
+        		data : new MenuViewModel(model)
+        	});
         });
-        this.get('admin.html#menu/:id', function () {
-        	var id = this.params.id;
-        	app.currentPage('menu');
-			$.get('/api/categories/' + id, function(data){
-				data.category_id = id; 
-				app.content(
-					{
-						html : menu_tpl,
-						data : new MenuViewModel(data)
-					}
-				);
-			})	
-        });
+
 
         this.get('admin.html', function () {
         	window.location = 'admin.html#tables';
