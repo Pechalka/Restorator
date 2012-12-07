@@ -4,7 +4,7 @@
               </select>
 
               <div class="btn-group ">
-              <a  class="btn btn-success " id="add-dish" data-toggle="modal" href="#myModal">добавить</a>
+              <a  class="btn btn-success " id="add-dish" href="javascript:void(0)" data-bind="click : add">добавить</a>
               <a  class="btn btn-danger " id="delete-dish" data-bind="css : { 'disabled' :  dishes().length == 0 }, click : remove_dish">удалить</a>
              </div>
               <span data-bind="text : chosen_category"></span>
@@ -27,70 +27,10 @@
 	                <li><a href="#">5</a></li>
 	             </ul>
 	</div>
-	<a class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  
+	<a data-bind="click : add_dish" class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  
 </div>  
 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h3 id="myModalLabel">Новая категория</h3>
-            </div>
-            <div class="modal-body form-horizontal"> 
-<div class="control-group">
-            <label class="control-label" for="txt_email">Название </label>
-            <div class="controls">
-                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название категории" maxlength="30" >
-            </div>
-        </div>
-
-            </div>
-            <div class="modal-footer">
-              <button class="btn" data-dismiss="modal">Не создовать</button>
-              <button class="btn btn-primary btn-success disabled">Создать</button>
-            </div>
+<div id="popup" data-bind="with : popup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<!-- ko template:{ html: html, data : data} -->
+<!-- /ko -->
 </div>
-
-<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h3 id="myModalLabel">Новое блюдо</h3>
-            </div>
-            <div class="modal-body form-horizontal"> 
-
-
-<div class="control-group">
-            <label class="control-label" for="txt_email">Название</label>
-            <div class="controls">
-                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название" maxlength="30" >
-            </div>
-        </div>
-
-<div class="control-group">
-            <label class="control-label" for="txt_email">Цена</label>
-            <div class="controls">
-                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Цена" maxlength="30" >
-            </div>
-        </div>
-
-<div class="control-group">
-            <label class="control-label" for="txt_email">Описание</label>
-            <div class="controls">
-                <textarea rows="3"></textarea>
-            </div>
-        </div>
-
-<div class="control-group">
-            <label class="control-label" for="txt_email">Категория</label>
-            <div class="controls">
-                <select data-bind="options: categories">
-              </select>
-            </div>
-        </div>
-
-            </div>
-            <div class="modal-footer">
-              <button class="btn" data-dismiss="modal">Не создовать</button>
-              <button class="btn btn-primary btn-success disabled">Создать</button>
-            </div>
-
-        </div>

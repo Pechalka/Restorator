@@ -6,11 +6,13 @@ require.config({
         "ko.mapping" : "/libs/knockout.mapping",
         "text": "/libs/text",
         "stringTemplateEngine": "/libs/stringTemplateEngine",
-        "sammy" : "/libs/sammy-latest.min"
+        "sammy" : "/libs/sammy-latest.min",
+        "bootstrap" : "/bootstrap/js/bootstrap.min"
     },
     shim: {
         "ko.mapping" : ["knockout"],
-        "stringTemplateEngine": ["knockout"]
+        "stringTemplateEngine": ["knockout"],
+        "bootstrap" : ["jquery"]
     }
 });
 
@@ -22,7 +24,9 @@ require([
     "app",
 
     "libs/enterKey",
-    "stringTemplateEngine"
+    "stringTemplateEngine",
+
+    "bootstrap"
 
     ], function(ko, $, App, Sammy){
 		$(function() {
