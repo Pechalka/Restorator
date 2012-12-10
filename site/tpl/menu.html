@@ -7,13 +7,12 @@
               <a  class="btn btn-success " id="add-dish" href="javascript:void(0)" data-bind="click : add">добавить</a>
               <a  class="btn btn-danger " id="delete-dish" data-bind="css : { 'disabled' :  dishes().length == 0 }, click : remove_dish">удалить</a>
              </div>
-              <span data-bind="text : chosen_category"></span>
             
 </div>
 
 <div class="navbar" data-bind="foreach : dishes">
 	<div class="navbar-inner" style="margin-top: 10px">
-		<a class="brand" data-toggle="modal" href="#myModal2" href="#" data-bind="text : name"></a>
+		<a class="brand" data-toggle="modal" href="#myModal2" data-bind="text : name, click : $parent.edit_dishe"></a>
 		<button class="close" style="margin-top: 10px" data-bind="click : $parent.remove" >&times;</button>
 	</div>	
 </div>

@@ -10,19 +10,25 @@ define(["knockout", "jquery", "ko.mapping",
 		var self = this;
 		
 		self.categories = ko.observableArray(model.categories);
-		self.dishes = ko.observableArray(model.dishes);
+		self._dishes = ko.observableArray(model.dishes);
 		self.chosen_category = ko.observable(model.categories[0]);
+
+		self.dishes = ko.computed(function() {
+			return ko.utils.arrayFilter(this._dishes(), function(item) {
+				return item.category == self.chosen_category(); 				
+			});
+		}, self);
 
 		self.popup = ko.observable(null);
 
 		self.remove = function(item){
-			self.dishes.remove(item);			
+			self._dishes.remove(item);			
 		}
 
 		self.remove_dish = function(){
 			if (self.dishes().length == 0) return;
 
-			alert('remove_dish');
+			alert('remove_category');
 		};
 
 		self.add = function(){
@@ -33,9 +39,23 @@ define(["knockout", "jquery", "ko.mapping",
 			$('#popup').modal('show');
 		}
 
+		self.edit_dishe = function(dishe) {
+			self.popup({
+				data : new edit_dish_view_model({
+							categories : model.categories,
+							dishe : dishe
+						}),
+				html : edit_dish_view
+			});
+			$('#popup').modal('show');
+
+			return false;
+		};
 		self.add_dish = function(){
 			self.popup({
-				data : new edit_dish_view_model(model.categories),
+				data : new edit_dish_view_model({ 
+					categories : model.categories
+				}),
 				html : edit_dish_view
 			});
 			$('#popup').modal('show');	

@@ -4,6 +4,11 @@ define(["knockout", "jquery"],function(ko, $) {
 		self.save = function(){
 			alert('222');
 		}
-		self.categories = ko.observable(model);
+
+		var dishe = model.dishe || { category : model.categories[0], price : 0, name : '', description : '' };
+
+
+		$.extend(self, dishe)
+		self.categories = model.categories;
 	}
 });

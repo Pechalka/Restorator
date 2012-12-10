@@ -55,16 +55,16 @@ define(["knockout", "jquery",
 					"Фрукты"
 				],
 				dishes : [
-					{ name : '"Ницца" с тунцом и анчоусами'}, 
-					{ name : '"Цезарь" с тигровыми креветками'},
-					{ name : 'Легкий Норвежский салат из лосося с авокадо'},
-					{ name : '"Цезарь" классический'},
-					{ name : 'Пикантный салатик с ломтиками телятины в кунжуте'},
-					{ name : 'Теплый салат с индейкой, красным виноградом и веточкой розмарина'},
-					{ name : 'Салат с грецкими орехами, карамелизированной грушей и сыром пекорино'},
-					{ name : 'Салат с белыми грибами и proscuitto di Parmа'},
-					{ name : 'Салат с proscuitto di Parmа, черешней и мятой'},
-					{ name : 'Салат с медальонами из свинины в пряной глазури'}
+					{ name : '"Ницца" с тунцом и анчоусами', category : 'Холодные закуски', price : 120 , description : 'bla bla bla bla bla bla '}, 
+					{ name : '"Цезарь" с тигровыми креветками', category : 'Холодные закуски' , price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Легкий Норвежский салат из лосося с авокадо', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : '"Цезарь" классический', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Пикантный салатик с ломтиками телятины в кунжуте', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Теплый салат с индейкой, красным виноградом и веточкой розмарина', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Салат с грецкими орехами, карамелизированной грушей и сыром пекорино', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Салат с белыми грибами и proscuitto di Parmа', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Салат с proscuitto di Parmа, черешней и мятой', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
+					{ name : 'Салат с медальонами из свинины в пряной глазури', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '}
 				]
 			};
 
