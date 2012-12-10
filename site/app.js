@@ -29,19 +29,7 @@ define(["knockout", "jquery",
 			app.currentPage('menu');
 
 	
-			render(app.content, "dishes", {
-				categories : [
-					"Холодные закуски",
-	                "Салаты",
-	                "Горячие закуски",
-	                "Мясные блюда",
-	                "Гарниры",
-	                "Горячие блюда из  рыбы",
-	                "Десерты",
-	                "Мороженое",
-					"Фрукты"
-				]
-			});
+			render(app.content, "dishes");
         });
 
 

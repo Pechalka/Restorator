@@ -6,12 +6,12 @@
 <div class="control-group">
             <label class="control-label" for="txt_email">Название </label>
             <div class="controls">
-                <input class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название категории" maxlength="30" >
+                <input data-bind="value : name, valueUpdate: 'afterkeydown'" class="input-large" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Название категории" maxlength="30" >
             </div>
         </div>
 
             </div>
             <div class="modal-footer">
               <button class="btn" data-dismiss="modal">Не создовать</button>
-              <button class="btn btn-primary btn-success disabled" data-bind="click : save">Создать</button>
+              <button class="btn btn-primary btn-success disabled" data-bind="click : save, css : { 'disabled' : !is_valide()  }">Создать</button>
             </div>

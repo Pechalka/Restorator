@@ -5,7 +5,7 @@
 
               <div class="btn-group ">
               <a  class="btn btn-success " id="add-dish" href="javascript:void(0)" data-bind="click : add">добавить</a>
-              <a  class="btn btn-danger " id="delete-dish" data-bind="css : { 'disabled' :  dishes().length > 0 }, click : remove_dish">удалить</a>
+              <a  class="btn btn-danger " id="delete-dish" data-bind="css : { 'disabled' : !can_delete_category() }, click : remove_category">удалить</a>
              </div>
             
 </div>

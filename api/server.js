@@ -112,7 +112,7 @@ app.post('/api/remove_dish', function(req, res){
 });
 
 app.post('/api/remove_category', function(req, res){	
-	Category.findOne({ _id : req.body.id }, 
+	Category.findOne({ name : req.body.name }, 
 		function(err, item){
 			item.remove()
 			res.json(200, 'ok');		

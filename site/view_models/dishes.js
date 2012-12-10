@@ -2,12 +2,12 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 	
 ,	function(ko, $, mapping, render) {
 	
-	return function(model){
+	return function(){
 		var self = this;
 		
-		self.categories = ko.observableArray(model.categories);
+		self.categories = ko.observableArray([]);
 		self._dishes = ko.observableArray([]);
-		self.chosen_category = ko.observable(model.categories[0]);
+		self.chosen_category = ko.observable("");
 
 		self.dishes = ko.computed(function() {
 			return ko.utils.arrayFilter(this._dishes(), function(item) {
@@ -32,8 +32,32 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 
 			// self._dishes(dishes);
 
-
 			$.get('/api/dishes', self._dishes);
+		}
+
+		self.fetch_categories = function(){
+
+			// {
+			// 	categories : [
+			// 		"Холодные закуски",
+	  //               "Салаты",
+	  //               "Горячие закуски",
+	  //               "Мясные блюда",
+	  //               "Гарниры",
+	  //               "Горячие блюда из  рыбы",
+	  //               "Десерты",
+	  //               "Мороженое",
+			// 		"Фрукты"
+			// 	]
+			// }
+			$.get('/api/categories', function(data){
+				var categor = [];
+				$.each(data, function(index, item){
+					categor.push(item.name);
+				})
+				self.categories(categor);
+				self.chosen_category(categor[0]);
+			});
 		}
 
 		self.popup = ko.observable(null);
@@ -44,23 +68,38 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 			});			
 		}
 
-		self.remove_dish = function(){
-			if (self.dishes().length > 0) return;
-
-			alert('remove_category');
+		self.remove_category = function(){
+			if (self.can_delete_category()) {
+				$.post('/api/remove_category', { name : self.chosen_category() }, self.fetch_categories);
+			}
 		};
 
+
+
+		self.can_delete_category = ko.computed(function(){
+			return this.categories().length > 0 && this.dishes().length == 0;
+		}, self);
+
+
 		self.add = function(){
-			render(self.popup, "new_category");
+			render(self.popup, "new_category", {
+				on_save : function(){
+					self.fetch_categories();
+					$('#popup').modal('hide');
+				}
+			});
 			$('#popup').modal('show');
 		}
 
 		self.edit_dishe = function(dishe) {
 			render(self.popup, "edit_dish", {
-				categories : model.categories,
+				categories : self.categories,
 				dishe : dishe,
 				dishes : self._dishes,
-				on_save : self.fetch
+				on_save : function(){
+					self.fetch();
+					$('#popup').modal('hide');
+				}
 			});
 			$('#popup').modal('show');
 
@@ -69,7 +108,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 
 		self.add_dish = function(){
 			render(self.popup, "edit_dish", {
-				categories : model.categories,
+				categories : self.categories,
 				dishes : self._dishes,
 				on_save : function(){
 					self.fetch();
@@ -80,5 +119,6 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		}
 
 		self.fetch();
+		self.fetch_categories();
 	}
 });		
