@@ -2,10 +2,10 @@ define(["knockout", "jquery",
 
 
     "text!/tpl/tables.html",
-    "text!/tpl/menu.html",
+    "text!/tpl/dishes.html",
 
     "view_models/TableViewModel",
-    "view_models/MenuViewModel",
+    "view_models/dishes",
 
     "sammy"
 

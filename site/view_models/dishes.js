@@ -26,7 +26,7 @@ define(["knockout", "jquery", "ko.mapping",
 		}
 
 		self.remove_dish = function(){
-			if (self.dishes().length == 0) return;
+			if (self.dishes().length > 0) return;
 
 			alert('remove_category');
 		};
@@ -51,6 +51,7 @@ define(["knockout", "jquery", "ko.mapping",
 
 			return false;
 		};
+		
 		self.add_dish = function(){
 			self.popup({
 				data : new edit_dish_view_model({ 
