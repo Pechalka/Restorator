@@ -1,21 +1,12 @@
 define(["knockout", "jquery",
 
-
-    "text!/tpl/tables.html",
-    "text!/tpl/dishes.html",
-
-    "view_models/TableViewModel",
-    "view_models/dishes",
+	"render",
 
     "sammy"
 
 	],function(ko, $, 
 
-		tables_tpl, 
-		menu_tpl, 
-
-    	TableViewModel,
-		MenuViewModel,
+		render,
 
 
 		Sammy) {
@@ -29,12 +20,7 @@ define(["knockout", "jquery",
         this.get('admin.html#tables', function () {
         	app.currentPage('tables');
 			$.get('/api/tables', function(data){
-				app.content(
-					{
-						html : tables_tpl,
-						data : new TableViewModel(data)
-					}
-				);
+				render(app.content, "tables", data);
 			});
         });
 
@@ -68,11 +54,7 @@ define(["knockout", "jquery",
 				]
 			};
 
-
-        	app.content({
-        		html : menu_tpl,
-        		data : new MenuViewModel(model)
-        	});
+			render(app.content, "dishes", model);
         });
 
 

@@ -1,21 +1,17 @@
-define(["knockout", "jquery", "ko.mapping", 	
-	"text!/tpl/new_category.html", "/view_models/new_category.js",	
-	"text!/tpl/edit_dish.html", "/view_models/edit_dish.js"]
+define(["knockout", "jquery", "ko.mapping", "render"]
 	
-,	function(ko, $, mapping, 		
-	new_category_view, new_category_view_model,		
-	edit_dish_view, edit_dish_view_model		) {
+,	function(ko, $, mapping, render) {
 	
 	return function(model){
 		var self = this;
 		
 		self.categories = ko.observableArray(model.categories);
-		self._dishes = ko.observableArray(model.dishes);
+		self._dishes = mapping.fromJS(model.dishes);
 		self.chosen_category = ko.observable(model.categories[0]);
 
 		self.dishes = ko.computed(function() {
 			return ko.utils.arrayFilter(this._dishes(), function(item) {
-				return item.category == self.chosen_category(); 				
+				return item.category() == self.chosen_category(); 				
 			});
 		}, self);
 
@@ -32,32 +28,24 @@ define(["knockout", "jquery", "ko.mapping",
 		};
 
 		self.add = function(){
-			self.popup({
-				data : new new_category_view_model(),
-				html : new_category_view
-			});
+			render(self.popup, "new_category");
 			$('#popup').modal('show');
 		}
 
 		self.edit_dishe = function(dishe) {
-			self.popup({
-				data : new edit_dish_view_model({
-							categories : model.categories,
-							dishe : dishe
-						}),
-				html : edit_dish_view
+			render(self.popup, "edit_dish", {
+				categories : model.categories,
+				dishe : dishe,
+				dishes : self._dishes
 			});
 			$('#popup').modal('show');
 
 			return false;
 		};
-		
+
 		self.add_dish = function(){
-			self.popup({
-				data : new edit_dish_view_model({ 
-					categories : model.categories
-				}),
-				html : edit_dish_view
+			render(self.popup, "edit_dish", {
+				categories : model.categories
 			});
 			$('#popup').modal('show');	
 		}

@@ -2,37 +2,37 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h3 id="myModalLabel">Новое блюдо</h3>
             </div>
-            <div class="modal-body form-horizontal"> 
+            <div class="modal-body form-horizontal" data-bind="with : dishe"> 
 
 
-<div class="control-group">
-            <label class="control-label" for="txt_email">Название</label>
-            <div class="controls">
-                <input class="input-large" id="txt_email" data-bind="value: name" style="height : 30px;" name="txt_email" type="text" placeholder="Название" maxlength="30" >
-            </div>
-        </div>
+                    <div class="control-group">
+                                <label class="control-label" for="txt_email">Название</label>
+                                <div class="controls">
+                                    <input class="input-large" id="txt_email" data-bind="value: name" style="height : 30px;" name="txt_email" type="text" placeholder="Название" maxlength="30" >
+                                </div>
+                            </div>
 
-<div class="control-group">
-            <label class="control-label" for="txt_email">Цена</label>
-            <div class="controls">
-                <input class="input-large" data-bind="value : price" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Цена" maxlength="30" >
-            </div>
-        </div>
+                    <div class="control-group">
+                                <label class="control-label" for="txt_email">Цена</label>
+                                <div class="controls">
+                                    <input class="input-large" data-bind="value : price" id="txt_email" style="height : 30px;" name="txt_email" type="text" placeholder="Цена" maxlength="30" >
+                                </div>
+                            </div>
 
-<div class="control-group">
-            <label class="control-label" for="txt_email">Описание</label>
-            <div class="controls">
-                <textarea rows="3" data-bind="value : description"></textarea>
-            </div>
-        </div>
+                    <div class="control-group">
+                                <label class="control-label" for="txt_email">Описание</label>
+                                <div class="controls">
+                                    <textarea rows="3" data-bind="value : description"></textarea>
+                                </div>
+                            </div>
 
-<div class="control-group">
-            <label class="control-label" for="txt_email">Категория</label>
-            <div class="controls">
-                <select data-bind="options: categories, value : category">
-              </select>
-            </div>
-        </div>
+                    <div class="control-group">
+                                <label class="control-label" for="txt_email">Категория</label>
+                                <div class="controls">
+                                    <select data-bind="options: $parent.categories, value : category">
+                                  </select>
+                                </div>
+                            </div>
 
             </div>
             <div class="modal-footer">

@@ -7,7 +7,8 @@ require.config({
         "text": "/libs/text",
         "stringTemplateEngine": "/libs/stringTemplateEngine",
         "sammy" : "/libs/sammy-latest.min",
-        "bootstrap" : "/bootstrap/js/bootstrap.min"
+        "bootstrap" : "/bootstrap/js/bootstrap.min",
+        "render" : "/core/render"
     },
     shim: {
         "ko.mapping" : ["knockout"],
