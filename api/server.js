@@ -19,7 +19,9 @@ var TableSchema = new Schema({
 
 var DishSchema =  new Schema({
 	name : String,
-	price : String
+	price : String,
+	description : String,
+	category : String
 });
 
 var CategorySchema = new Schema({
@@ -30,6 +32,8 @@ var CategorySchema = new Schema({
 
 var Table = mongoose.model('Tables', TableSchema);
 var Category = mongoose.model('Categories', CategorySchema);
+var Dishes = mongoose.model('dishes', DishSchema);
+
 
 mongoose.connect('mongodb://localhost/Restoran');
 
@@ -115,6 +119,31 @@ app.post('/api/remove_category', function(req, res){
 		}
 	);
 });
+
+app.get('/api/dishes', function(req, res){
+	Dishes.find({}, function(err, items){
+		res.json(200, items);	
+	});
+});
+
+
+app.post('/api/dishes', function(req, res){
+	console.log(req.body);
+	var dish = new Dishes(req.body);
+	dish.save(function(){
+		res.json(200, 'ok');
+	});
+});
+
+app.post('/api/dishes_delete', function(req, res){
+	Dishes.findOne({ _id : req.body._id }, 
+		function(err, item){
+			item.remove()
+			res.json(200, 'ok');		
+		}
+	);
+});
+
 
 app.post('/api/add_category', function(req, res){	
 	var category = new Category(req.body);	
