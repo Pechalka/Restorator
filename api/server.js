@@ -32,7 +32,7 @@ app.post('/api/reserve', function(req, res){
 });
 
 app.get('/api/categories', function(req, res){	
-	db.Category.find({}, function(err, data){
+	db.Category.find({  }, function(err, data){
 		res.json(200, data);		
 	});
 });
@@ -91,8 +91,8 @@ app.post('/api/remove_category', function(req, res){
 	);
 });
 
-app.get('/api/dishes', function(req, res){
-	db.Dishes.find({}, function(err, items){
+app.get('/api/dishes/:category', function(req, res){
+	db.Dishes.find({ category : req.params.category}, function(err, items){
 		res.json(200, items);	
 	});
 });

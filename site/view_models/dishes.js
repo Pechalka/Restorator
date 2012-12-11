@@ -6,74 +6,35 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		var self = this;
 		
 		self.categories = ko.observableArray([]);
-		self._dishes = ko.observableArray([]);
+		self.dishes = ko.observableArray([]);
 		self.chosen_category = ko.observable("");
+		self.popup = ko.observable(null);
 
-		self.dishes = ko.computed(function() {
-			return ko.utils.arrayFilter(this._dishes(), function(item) {
-				return item.category == self.chosen_category(); 				
-			});
+		self.fetch_categories = function(){
+			$.get('/api/categories', self.categories);
+		}
+
+		self.update_count = ko.observable(0);
+		self.fetch_dishes = ko.computed(function(){	
+			self.update_count();//первый жесткий костыль, пора спать:)
+
+			if (self.chosen_category())//todo: разобратся с deferred, и использовать ее для первой загрузки, посмотреть knockoutjs peek
+				$.get('/api/dishes/' + self.chosen_category().name, self.dishes);
+
 		}, self);
 
 
-		self.fetch = function(){	
-			// var dishes = [
-			// 		{ name : '"Ницца" с тунцом и анчоусами', category : 'Холодные закуски', price : 120 , description : 'bla bla bla bla bla bla '}, 
-			// 		{ name : '"Цезарь" с тигровыми креветками', category : 'Холодные закуски' , price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Легкий Норвежский салат из лосося с авокадо', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : '"Цезарь" классический', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Пикантный салатик с ломтиками телятины в кунжуте', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Теплый салат с индейкой, красным виноградом и веточкой розмарина', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Салат с грецкими орехами, карамелизированной грушей и сыром пекорино', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Салат с белыми грибами и proscuitto di Parmа', category : 'Десерты', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Салат с proscuitto di Parmа, черешней и мятой', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '},
-			// 		{ name : 'Салат с медальонами из свинины в пряной глазури', category : 'Холодные закуски', price : 120, description : 'bla bla bla bla bla bla '}
-			// 	];
-
-			// self._dishes(dishes);
-
-			$.get('/api/dishes', self._dishes);
-		}
-
-		self.fetch_categories = function(){
-
-			// {
-			// 	categories : [
-			// 		"Холодные закуски",
-	  //               "Салаты",
-	  //               "Горячие закуски",
-	  //               "Мясные блюда",
-	  //               "Гарниры",
-	  //               "Горячие блюда из  рыбы",
-	  //               "Десерты",
-	  //               "Мороженое",
-			// 		"Фрукты"
-			// 	]
-			// }
-			$.get('/api/categories', function(data){
-				var categor = [];
-				$.each(data, function(index, item){
-					categor.push(item.name);
-				})
-				self.categories(categor);
-				self.chosen_category(categor[0]);
-			});
-		}
-
-		self.popup = ko.observable(null);
-
 		self.remove = function(item){
 			$.post('/api/dishes_delete', item, function(){
-				self._dishes.remove(item);
+				self.dishes.remove(item);
 			});			
 		}
 
 		self.remove_category = function(){
 			if (self.can_delete_category()) {
-				$.post('/api/remove_category', { name : self.chosen_category() }, self.fetch_categories);
+				$.post('/api/remove_category', { name : self.chosen_category().name }, self.fetch_categories);
 			}
 		};
-
 
 
 		self.can_delete_category = ko.computed(function(){
@@ -95,30 +56,32 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 			render(self.popup, "edit_dish", {
 				categories : self.categories,
 				dishe : dishe,
-				dishes : self._dishes,
 				on_save : function(){
-					self.fetch();
+					self.update_count(self.update_count() + 1)
 					$('#popup').modal('hide');
 				}
 			});
 			$('#popup').modal('show');
-
-			return false;
 		};
 
+
+		self.can_add_dish = ko.computed(function(){
+			return this.categories().length > 0 ;
+		}, self);
+
 		self.add_dish = function(){
-			render(self.popup, "edit_dish", {
-				categories : self.categories,
-				dishes : self._dishes,
-				on_save : function(){
-					self.fetch();
-					$('#popup').modal('hide');
-				}
-			});
-			$('#popup').modal('show');
+			if (self.can_add_dish()) {
+				render(self.popup, "edit_dish", {
+					categories : self.categories,
+					on_save : function(){
+						self.update_count(self.update_count() + 1)
+						$('#popup').modal('hide');
+					}
+				});
+				$('#popup').modal('show');
+			}
 		}
 
-		self.fetch();
 		self.fetch_categories();
 	}
 });		

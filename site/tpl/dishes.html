@@ -1,6 +1,6 @@
 <div class="well form-search">
 		<span style="font-size: 20px">Категория </span>
-			<select class="span6" data-bind="options: categories, selectedOptions: chosen_category">
+			<select class="span6" data-bind="options: categories, value: chosen_category, optionsText : 'name' ">
               </select>
 
               <div class="btn-group ">
@@ -26,7 +26,7 @@
 	                <li><a href="#">5</a></li>
 	             </ul>
 	</div>
-	<a data-bind="click : add_dish" class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  
+	<a data-bind="click : add_dish, css : { 'disabled' : !can_add_dish() }" class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  
 </div>  
 
 <div id="popup" data-bind="with : popup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

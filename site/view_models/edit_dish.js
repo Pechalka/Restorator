@@ -5,7 +5,10 @@ define(["knockout", "jquery", "ko.mapping"],function(ko, $, mapping) {
 			if (!self.is_valide())
 				return;
 
-			$.post('/api/dishes', ko.toJS(self.dishe), model.on_save);
+			var data = ko.toJS(self.dishe);
+			data.category = self.dishe.category().name;
+			
+			$.post('/api/dishes', data, model.on_save);
 		}
 
 		self.is_valide = function(){
@@ -13,7 +16,7 @@ define(["knockout", "jquery", "ko.mapping"],function(ko, $, mapping) {
 		}
 
 		self.isNew = !model.dishe;
-		self.dishe = mapping.fromJS( model.dishe || { category : model.categories[0], price : 0, name : '', description : '' });
+		self.dishe = mapping.fromJS( model.dishe || { category : model.categories()[0].name, price : 0, name : '', description : '' });
 
 
 		self.categories = model.categories;
