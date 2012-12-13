@@ -10,14 +10,30 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		self.chosen_category = ko.observable("");
 		self.popup = ko.observable(null);
 
+		self.paging = {
+	        PageNumber: ko.observable(1),
+	        TotalPagesCount: ko.observable(10),
+	        next: function () {
+	            var pn = this.PageNumber();
+	            if (pn < this.TotalPagesCount()) this.PageNumber(pn + 1);
+	        },
+	        back: function () {
+	            var pn = this.PageNumber();
+	            if (pn > 1) this.PageNumber(pn - 1);
+	        }
+	    };
+
+
 		self.fetch_categories = function(){
 			$.get('/api/categories', self.categories);
 		}
 
 		self.update_count = ko.observable(0);
 		self.fetch_dishes = function(){	
-			if (self.chosen_category())//todo: разобратся с deferred, и использовать ее для первой загрузки, посмотреть knockoutjs peek
-				$.get('/api/dishes/' + self.chosen_category().name, self.dishes);
+			//todo: разобратся с deferred, и использовать ее для первой загрузки, посмотреть knockoutjs peek
+			if (self.chosen_category()){
+				$.get('/api/dishes/' + self.chosen_category().name + "/" + self.paging.PageNumber(), self.dishes);
+			}
 		}
 
 		self.remove = function(item){

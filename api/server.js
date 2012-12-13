@@ -91,8 +91,10 @@ app.post('/api/remove_category', function(req, res){
 	);
 });
 
-app.get('/api/dishes/:category', function(req, res){
-	db.Dishes.find({ category : req.params.category}, function(err, items){
+app.get('/api/dishes/:category/:page', function(req, res){
+	var pageSize = 3;
+	var pageNumber = req.params.page;
+	db.Dishes.find({ category : req.params.category}, {}, { skip: (pageNumber - 1) * pageSize, limit: pageSize }, function(err, items){
 		res.json(200, items);	
 	});
 });
