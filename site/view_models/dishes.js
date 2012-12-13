@@ -13,13 +13,19 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		self.paging = {
 	        PageNumber: ko.observable(1),
 	        TotalPagesCount: ko.observable(10),
+	        can_next : function(){
+	        	return this.PageNumber() < this.TotalPagesCount();
+	        },
 	        next: function () {
-	            var pn = this.PageNumber();
-	            if (pn < this.TotalPagesCount()) this.PageNumber(pn + 1);
+	            if (this.can_next()) 
+	            	this.PageNumber(this.PageNumber() + 1);
+	        },
+	        can_back : function(){
+	        	return this.PageNumber() > 1;
 	        },
 	        back: function () {
-	            var pn = this.PageNumber();
-	            if (pn > 1) this.PageNumber(pn - 1);
+	            if (this.can_back()) 
+	            	this.PageNumber(this.PageNumber() - 1);
 	        }
 	    };
 
@@ -28,23 +34,19 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 			$.get('/api/categories', self.categories);
 		}
 
-		self.update_count = ko.observable(0);
 		self.fetch_dishes = function(){	
-			//todo: разобратся с deferred, и использовать ее для первой загрузки, посмотреть knockoutjs peek
-			if (self.chosen_category()){
-				$.get('/api/dishes/' + self.chosen_category().name + "/" + self.paging.PageNumber(), self.dishes);
-			}
+			if (!self.chosen_category()) return;
+
+			$.get('/api/dishes/' + self.chosen_category() + "/" + self.paging.PageNumber(), function(data){
+				self.dishes(data.dishes);
+				self.paging.TotalPagesCount(data.total_pages_count);
+			});
 		}
 
-		self.remove = function(item){
-			$.post('/api/dishes_delete', item, function(){
-				self.dishes.remove(item);
-			});			
-		}
 
 		self.remove_category = function(){
 			if (self.can_delete_category()) {
-				$.post('/api/remove_category', { name : self.chosen_category().name }, self.fetch_categories);
+				$.post('/api/remove_category', { name : self.chosen_category() }, self.fetch_categories);
 			}
 		};
 
@@ -85,6 +87,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 			if (self.can_add_dish()) {
 				render(self.popup, "edit_dish", {
 					categories : self.categories,
+					dishe : { category : self.chosen_category(), price : 0, name : '', description : '' },
 					on_save : function(){
 						self.fetch_dishes();
 						$('#popup').modal('hide');
@@ -94,8 +97,23 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 			}
 		}
 
+		self.remove_dish = function(item){
+			$.post('/api/dishes_delete', item, function(){
+				if (self.dishes().length == 1  && self.paging.PageNumber() != 1)
+					self.paging.PageNumber(self.paging.TotalPagesCount() - 1);
+				else
+					self.fetch_dishes();
+			});			
+		}
+
+		self.paging.PageNumber.subscribe(self.fetch_dishes);
+		self.chosen_category.subscribe(function(){
+			self.paging.PageNumber(1);
+			self.fetch_dishes();
+		});
+
 		self.fetch_categories();
 
-		ko.computed(self.fetch_dishes, self);
+		//ko.computed(self.fetch_dishes, self);
 	}
 });		

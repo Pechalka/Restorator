@@ -1,6 +1,6 @@
 <div class="well form-search">
 		<span style="font-size: 20px">Категория </span>
-			<select class="span6" data-bind="options: categories, value: chosen_category, optionsText : 'name' ">
+			<select class="span6" data-bind="options: categories, value: chosen_category, optionsText : 'name', optionsValue : 'name' ">
               </select>
 
               <div class="btn-group ">
@@ -13,28 +13,16 @@
 <div class="navbar" data-bind="foreach : dishes">
 	<div class="navbar-inner" style="margin-top: 10px">
 		<a class="brand" data-toggle="modal" href="#myModal2" data-bind="text : name, click : $parent.edit_dishe"></a>
-		<button class="close" style="margin-top: 10px" data-bind="click : $parent.remove" >&times;</button>
+		<button class="close" style="margin-top: 10px" data-bind="click : $parent.remove_dish" >&times;</button>
 	</div>	
 </div>
 <div>
-	<!--
-	<div class="span7 pagination pagination-large">
-	               <ul>
-	                <li><a href="#">1</a></li>
-	                <li><a href="#">2</a></li>
-	                <li><a href="#">3</a></li>
-	                <li><a href="#">4</a></li>
-	                <li><a href="#">5</a></li>
-	             </ul>
-	             </div>
 
-	             disabled
- -->
  <div class="span7" data-bind="with : paging">
 	             <ul class="pager">
-              <li class="previous "><a href="javascript:void(0)" data-bind="click : back">← Туда</a></li>
+              <li class="previous" data-bind="css : { 'disabled' : !can_back()}"><a href="javascript:void(0)" data-bind="click : back">← Туда</a></li>
               <li>Страницы <b data-bind="text : PageNumber">1</b> из <b data-bind="text : TotalPagesCount">5</b></li>
-              <li class="next"><a href="javascript:void(0)" data-bind="click : next">Сюда →</a></li>
+              <li class="next" data-bind="css : { 'disabled' : !can_next()}"><a href="javascript:void(0)" data-bind="click : next">Сюда →</a></li>
             </ul>
 	</div>
 	<a data-bind="click : add_dish, css : { 'disabled' : !can_add_dish() }" class="btn btn-success btn-large pull-right"   style="margin-top: 20px" data-toggle="modal" href="#myModal2">Добавить блюдо</a>  

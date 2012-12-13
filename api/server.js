@@ -1,6 +1,9 @@
 var express = require('express');
 var db = require('./database');
 var app = express();
+//var p = require('mongoose-paginate');
+
+
 
 app.configure(function(){
 	app.use(express.bodyParser());
@@ -91,12 +94,18 @@ app.post('/api/remove_category', function(req, res){
 	);
 });
 
+
+
+
 app.get('/api/dishes/:category/:page', function(req, res){
-	var pageSize = 3;
-	var pageNumber = req.params.page;
-	db.Dishes.find({ category : req.params.category}, {}, { skip: (pageNumber - 1) * pageSize, limit: pageSize }, function(err, items){
-		res.json(200, items);	
-	});
+	db.Dishes
+		.paginate({ category : req.params.category},req.params.page, 10, function(e, pages_count, items){		
+			res.json(200, {
+				dishes : items,
+				total_pages_count : pages_count,
+				page : req.params.page
+			});
+		});
 });
 
 

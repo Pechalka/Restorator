@@ -6,7 +6,7 @@ define(["knockout", "jquery", "ko.mapping"],function(ko, $, mapping) {
 				return;
 
 			var data = ko.toJS(self.dishe);
-			data.category = self.dishe.category().name;
+			data.category = self.dishe.category();
 			
 			$.post('/api/dishes', data, model.on_save);
 		}
@@ -15,10 +15,7 @@ define(["knockout", "jquery", "ko.mapping"],function(ko, $, mapping) {
 			return self.dishe.name().length > 0;
 		}
 
-		self.isNew = !model.dishe;
-		self.dishe = mapping.fromJS( model.dishe || { category : model.categories()[0].name, price : 0, name : '', description : '' });
-
-
+		self.dishe = mapping.fromJS( model.dishe );
 		self.categories = model.categories;
 	}
 });
