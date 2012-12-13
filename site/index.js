@@ -6,38 +6,27 @@ $(function() {
 		self.categories = ko.observableArray(model);
 		self.dishes = ko.observableArray(null);
 
-		self.basket = {};
-		//ko.observable(null);
-		//ko.observableArray([]);
+		self.basket = ko.observableArray([]);
 
 
 		self.price = ko.computed(function(){
 			var sum = 0;
 			
 
-			// ko.utils.arrayForEach(self.basket(), function(item){
-			// 	sum += parseInt(item.price, 10);
-			// });
-
-			for(var key in self.basket)
-			{
-				sum += parseInt(self.basket[key]() * item.price, 10);
-			}
+			ko.utils.arrayForEach(self.basket(), function(item){
+				sum += parseInt(item.price, 10);
+			});
 
 			return sum;
 		});
 
 		self.add_item = function(item){
-			if (self.basket[item.Id])
-				self.basket[item.Id](self.basket[item.Id]() + 1);
-			else	
-				self.basket[item.Id] = ko.observable(0);
+			self.basket.push($.extend({}, item));
 		};
 
 		self.remove_item = function(item){
-			self.basket[item.Id](self.basket[item.Id] - 1);
-
-//			self.basket.remove(item);
+			var p = ko.utils.arrayFirst(self.basket(), function(item) { return item._id == item._id; });
+			self.basket.remove(p);
 		}
 
 		self.chosen_category = ko.observable(model[0].name);
