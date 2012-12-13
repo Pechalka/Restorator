@@ -15,14 +15,10 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		}
 
 		self.update_count = ko.observable(0);
-		self.fetch_dishes = ko.computed(function(){	
-			self.update_count();//первый жесткий костыль, пора спать:)
-
+		self.fetch_dishes = function(){	
 			if (self.chosen_category())//todo: разобратся с deferred, и использовать ее для первой загрузки, посмотреть knockoutjs peek
 				$.get('/api/dishes/' + self.chosen_category().name, self.dishes);
-
-		}, self);
-
+		}
 
 		self.remove = function(item){
 			$.post('/api/dishes_delete', item, function(){
@@ -42,7 +38,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		}, self);
 
 
-		self.add = function(){
+		self.add_category = function(){
 			render(self.popup, "new_category", {
 				on_save : function(){
 					self.fetch_categories();
@@ -57,7 +53,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 				categories : self.categories,
 				dishe : dishe,
 				on_save : function(){
-					self.update_count(self.update_count() + 1)
+					self.fetch_dishes();
 					$('#popup').modal('hide');
 				}
 			});
@@ -74,7 +70,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 				render(self.popup, "edit_dish", {
 					categories : self.categories,
 					on_save : function(){
-						self.update_count(self.update_count() + 1)
+						self.fetch_dishes();
 						$('#popup').modal('hide');
 					}
 				});
@@ -83,5 +79,7 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 		}
 
 		self.fetch_categories();
+
+		ko.computed(self.fetch_dishes, self);
 	}
 });		
