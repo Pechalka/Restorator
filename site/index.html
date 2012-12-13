@@ -4,29 +4,28 @@
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
-	<div class='container'>
-		
-    <h1 data-bind="text : lable">Tables</h1>
 
-  <div class='navbar' data-bind='foreach : tables'>
-		<div class="navbar-inner" style='margin-top: 10px'>
+<div class='container'>
+  <div class='row'>
+      <div class='span4'>
+        <ul class="nav nav-tabs nav-stacked" data-bind="foreach : categories">
+          <li data-bind="css : { 'active' : $parent.chosen_category() == name }, click : $parent.select_category"><a href="#" data-bind='text : name'></a></li>
+        </ul>
+      </div>
+      <div class='span8' data-bind="foreach : dishes">
+        <div data-bind="text : name"></div>
+        <span data-bind="text : price"></span>
+        <a href="javascript:void(0)" data-bind="click : $parent.remove_item">-</a>
+        <span>0</span>
+        <a href="javascript:void(0)" data-bind="click : $parent.add_item">+</a>       
+      </div>
 
-      <a class="brand" href="#" data-bind="text : name"></a>
+   </div> 
+<a href="javascript:void(0)" class="btn btn-danger btn-large pull-right">Заказ <span data-bind="text : price">43245</span></a>
 
-  <!-- ko if: free() == true -->
-      <button data-bind="click : $parent.reserve" class="btn btn-warning" style=' float: right' >Занять</button>
- <!-- /ko -->
-  <!-- ko if: free() == false -->
- 
-      <button data-bind="click : $parent.serve" class="btn btn-inverse" style=' float: right' >Счет</button>
-<!-- /ko -->
- 
-    </div>
-	</div>
-  <div class="btn-group" data-toggle="buttons-radio">
-    <button data-bind="click : free, css :{ 'active' : is_free() == true }" type="button" class="btn btn-large btn-success">Свободные</button>
-    <button data-bind="click : not_free, css :{ 'active' : is_free() == false }" type="button" class="btn btn-large btn-warning">Занятые</button>
-  </div>
+</div>  
+
+
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     

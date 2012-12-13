@@ -1,44 +1,61 @@
 $(function() {
 
-	function viewModel(model){
+	function view_model(model){
 		var self = this;
 
-		self.data = ko.mapping.fromJS(model);
+		self.categories = ko.observableArray(model);
+		self.dishes = ko.observableArray(null);
 
-		self.is_free = ko.observable(true);
+		self.basket = {};
+		//ko.observable(null);
+		//ko.observableArray([]);
 
-		self.free = function(){
-			self.is_free(true);
+
+		self.price = ko.computed(function(){
+			var sum = 0;
+			
+
+			// ko.utils.arrayForEach(self.basket(), function(item){
+			// 	sum += parseInt(item.price, 10);
+			// });
+
+			for(var key in self.basket)
+			{
+				sum += parseInt(self.basket[key]() * item.price, 10);
+			}
+
+			return sum;
+		});
+
+		self.add_item = function(item){
+			if (self.basket[item.Id])
+				self.basket[item.Id](self.basket[item.Id]() + 1);
+			else	
+				self.basket[item.Id] = ko.observable(0);
 		};
-		self.not_free = function(){
-			self.is_free(false);
+
+		self.remove_item = function(item){
+			self.basket[item.Id](self.basket[item.Id] - 1);
+
+//			self.basket.remove(item);
+		}
+
+		self.chosen_category = ko.observable(model[0].name);
+
+		self.select_category = function(item){
+			self.chosen_category(item.name);
+			$.get('/api/dishes/' + self.chosen_category() + '/1', function(data){
+				self.dishes(data.dishes);
+			});
 		};
 
-		self.reserve = function(item){
-			$.post('/api/reserve', { id : item._id }, function(){
-				item.free(false);
-			});			
-		};
 
-		self.serve = function(item){
-			item.free(true);
-		};
-
-		self.lable = ko.computed(function() {
-			return self.is_free() ? "Свободны" : "Заняты";
-		}, self);
-
-		self.tables = ko.computed(function() {		
-			return ko.utils.arrayFilter(self.data(), 
-        		function(item){
-        			return item.free() == self.is_free();
-        		});
-    	}, self);
 	}
 
-	$.get('/api/tables', function(data){
-		var vm = new viewModel(data);
+
+	$.get('/api/categories', function(data){
+		var vm = new view_model(data);
 		ko.applyBindings(vm);
-	});
+	});	
 
 });
