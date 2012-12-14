@@ -32,7 +32,7 @@ var Schema = mongoose.Schema;
 var TableSchema = new Schema({
 	name : String,
 	free : { type : Boolean, default : true }
-});
+}); // ,{ safe : true }); in last version mongoose
 
 var DishSchema =  new Schema({
 	name : String,
