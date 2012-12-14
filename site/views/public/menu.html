@@ -1,0 +1,16 @@
+  <div class='row'>
+      <div class='span4'>
+        <ul class="nav nav-tabs nav-stacked" data-bind="foreach : categories">
+          <li data-bind="css : { 'active' : $parent.chosen_category() == name }, click : $parent.select_category"><a href="#" data-bind='text : name'></a></li>
+        </ul>
+      </div>
+      <div class='span8' data-bind="foreach : dishes">
+        <div data-bind="text : name"></div>
+        <span data-bind="text : price"></span>
+        <a href="javascript:void(0)" data-bind="click : $parent.remove_item">-</a>
+        <span data-bind="text : $parent.count($data)">0</span>
+        <a href="javascript:void(0)" data-bind="click : $parent.add_item">+</a>       
+      </div>
+
+   </div> 
+<a href="javascript:void(0)" class="btn btn-danger btn-large pull-right">Заказ <span data-bind="text : price">43245</span></a>
