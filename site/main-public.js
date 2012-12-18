@@ -32,7 +32,7 @@ require([
     ], function(ko, $, App, Sammy){
 		$(function() {
 			window.app = App;
-			debugger
+
 			ko.applyBindings(app);
 
 			app.run();

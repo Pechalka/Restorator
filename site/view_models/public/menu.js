@@ -1,6 +1,19 @@
 define(["knockout", "jquery"] 
 , function(ko, $) {
-  return function view_model(model){
+
+(function($) {
+    $.fn.uniformHeight = function() {
+        var maxHeight   = 0,
+            max         = Math.max;
+
+        return this.each(function() {
+            maxHeight = max(maxHeight, $(this).height());
+        }).height(maxHeight);
+    }
+})(jQuery);
+
+
+  return function(model){
     var self = this;
 
     self.categories = ko.observableArray(model);
@@ -33,7 +46,16 @@ define(["knockout", "jquery"]
 
     self.fetch = function(){
       $.get('/api/dishes/' + self.chosen_category() + '/1', function(data){
+        
+
+        ko.utils.arrayForEach(data.dishes, function(item){
+         // item.name = item.name.substring(0, 14);
+        });
+
+
         self.dishes(data.dishes);
+
+        $(".thumbnails .thumbnail .text").uniformHeight();
       });
     }
 
