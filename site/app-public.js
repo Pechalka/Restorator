@@ -16,6 +16,16 @@ define(["knockout", "jquery",
 
 		app.content = ko.observable(null);
 
+		// create model
+		app.basket = ko.observableArray([]);
+
+
+		this.get('#order', function() {
+			var model = {};
+			model.basket = app.basket;
+        	render(app.content, "public/order", model);
+        });
+
         this.get('index.html', function () {
         	window.location = '';
         });
@@ -23,8 +33,11 @@ define(["knockout", "jquery",
 
         this.get('', function () {               
 			$.get('/api/categories', function(data){
+				data.basket = app.basket;
 				render(app.content, "public/menu", data);
 			});
         });
+
+        
 	});
 });		

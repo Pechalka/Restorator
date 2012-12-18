@@ -1,0 +1,19 @@
+<a href="/" class='btn'>Назад</a>
+
+<h1>Заказ : </h1>
+<table class="table">
+              <thead>
+                <tr>
+                  <th>Название</th>
+                  <th>Количество</th>
+                  <th>Цена</th>
+                </tr>
+              </thead>
+              <tbody data-bind="foreach : basket">
+                <tr>
+                  <td data-bind="text : name"></td>
+                  <td >0</td>
+                  <td data-bind="text : price"></td>
+                </tr>
+              </tbody>
+            </table>

@@ -1,17 +1,6 @@
 define(["knockout", "jquery"] 
 , function(ko, $) {
 
-(function($) {
-    $.fn.uniformHeight = function() {
-        var maxHeight   = 0,
-            max         = Math.max;
-
-        return this.each(function() {
-            maxHeight = max(maxHeight, $(this).height());
-        }).height(maxHeight);
-    }
-})(jQuery);
-
 
   return function(model){
     var self = this;
@@ -19,14 +8,14 @@ define(["knockout", "jquery"]
     self.categories = ko.observableArray(model);
     self.dishes = ko.observableArray(null);
 
-    self.basket = ko.observableArray([]);
+    
 
 
     self.price = ko.computed(function(){
       var sum = 0;
       
 
-      ko.utils.arrayForEach(self.basket(), function(item){
+      ko.utils.arrayForEach(model.basket(), function(item){
         sum += parseInt(item.price, 10);
       });
 
@@ -34,12 +23,12 @@ define(["knockout", "jquery"]
     });
 
     self.add_item = function(item){
-      self.basket.push($.extend({}, item));
+      model.basket.push($.extend({}, item));
     };
 
     self.remove_item = function(item){
-      var deleted_item = ko.utils.arrayFirst(self.basket(), function(i) { return item._id == i._id; });
-      self.basket.remove(deleted_item);
+      var deleted_item = ko.utils.arrayFirst(model.basket(), function(i) { return item._id == i._id; });
+      model.basket.remove(deleted_item);
     }
 
     self.chosen_category = ko.observable(model[0].name);
@@ -47,17 +36,14 @@ define(["knockout", "jquery"]
     self.fetch = function(){
       $.get('/api/dishes/' + self.chosen_category() + '/1', function(data){
         
-
-        ko.utils.arrayForEach(data.dishes, function(item){
-         // item.name = item.name.substring(0, 14);
-        });
-
-
         self.dishes(data.dishes);
 
-        $(".thumbnails .thumbnail .text").uniformHeight();
       });
     }
+
+    self.have_order = ko.computed(function() {
+      return model.basket().length > 0;
+    });
 
     self.select_category = function(item){
       self.chosen_category(item.name);
@@ -65,11 +51,17 @@ define(["knockout", "jquery"]
 
     ko.computed(self.fetch);
 
+    self.order = function() {
+      if (!self.have_order())
+        return false;
+
+      window.location = '#order';
+    };
 
 
     self.count = function(item){        
       var count = 0;
-      ko.utils.arrayForEach(self.basket(), function(i){//todo :  find count(...)
+      ko.utils.arrayForEach(model.basket(), function(i){//todo :  find count(...)
         if (item._id == i._id)
           count++;
       });
