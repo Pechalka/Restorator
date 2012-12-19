@@ -78,5 +78,11 @@ define(["knockout", "jquery"]
     self.cansel = function() {
       $('.dropdown-toggle').dropdown();      
     };
+
+    self.remove = function() {
+      $('.dropdown-toggle').dropdown();      
+      model.basket.removeAll();      
+    };
+    
   }
 });
