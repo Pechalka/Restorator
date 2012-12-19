@@ -68,5 +68,15 @@ define(["knockout", "jquery"]
 
       return count;
     }
+
+
+    self.add_to_check = function() {
+      $('.dropdown-toggle').dropdown();
+      model.basket.removeAll();
+    };
+
+    self.cansel = function() {
+      $('.dropdown-toggle').dropdown();      
+    };
   }
 });

@@ -7,7 +7,32 @@
  <div class="navbar">
   <div class="navbar-inner">
 
-    <a class="btn btn-success" data-bind="css : { 'disabled' : !have_order() }, click : order" >Заказ <span data-bind="text : price">-</span></a>
+
+
+    <ul class="nav">
+ <!--                      <li class="dropdown ">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Добавить к счету <b class="caret"></b></a>
+                        <ul class="dropdown-menu ">
+                          <li data-bind="css : { 'disabled' : !have_order() }, click : add_to_check" class='disabled'><a href="#">Столик 1</a></li>
+                          <li data-bind="css : { 'disabled' : !have_order() }, click : r"><a href="#">Столик 2</a></li>
+                          <li data-bind="css : { 'disabled' : !have_order() }, click : r"><a href="#">Столик 3</a></li>
+                        </ul>
+                      </li>
+                    </ul> -->
+
+<div class="btn-group" >
+                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-bind="css : { 'disabled' : !have_order() }">Добавить к счету  <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li data-bind="click : add_to_check"><a href="#"  >Столик 1</a></li>
+                  <li data-bind="click : add_to_check"><a href="#"  >Столик 2</a></li>
+                  <li data-bind="click : add_to_check"><a href="#"  >Столик 3</a></li>
+                  <li class="divider"></li>
+                  <li  data-bind="click : cansel"><a href="#">Нечико не делать</a></li>
+                </ul>
+              </div>
+
+
+              <a class="btn " data-bind="css : { 'disabled' : !have_order() }, click : order" >Заказ <span data-bind="text : price">-</span></a>          
   </div>
 </div>
 
