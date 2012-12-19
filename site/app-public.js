@@ -21,9 +21,13 @@ define(["knockout", "jquery",
 
 
 		this.get('#order', function() {
-			var model = {};
-			model.basket = app.basket;
-        	render(app.content, "public/order", model);
+			$.get('/api/tables', function(tables) {
+        		render(app.content, "public/order", {
+        			tables : tables,
+        			basket : app.basket
+        		});
+			});
+
         });
 
         this.get('index.html', function () {

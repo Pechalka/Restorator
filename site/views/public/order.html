@@ -1,19 +1,38 @@
-<a href="/" class='btn'>Назад</a>
 
 <h1>Заказ : </h1>
 <table class="table">
               <thead>
                 <tr>
-                  <th>Название</th>
-                  <th>Количество</th>
-                  <th>Цена</th>
+                  <th>название</th>
+                  <th>кол-во</th>
+                  <th>цена</th>
+                  <th>стоимость</th>                  
                 </tr>
               </thead>
-              <tbody data-bind="foreach : basket">
+              <tbody data-bind="foreach : order_items">
                 <tr>
                   <td data-bind="text : name"></td>
-                  <td >0</td>
+                  <td data-bind="text : count"></td>
                   <td data-bind="text : price"></td>
+                  <td data-bind="text : sum"></td>
                 </tr>
               </tbody>
             </table>
+<div class='row' style="margin-bottom : 20px">
+  <div class='span12'>
+    <span class='pull-right badge badge-warning' data-bind="text : totalPrice"></span>
+  </div>  
+</div>
+
+<div class='row' >
+  <div class='span6'>
+    <a href="/" class='btn btn-large'>Отмена</a>
+    </div>
+  <div class='span6 '>
+    <select  data-bind="options: tables, value: chosen_table, optionsText : 'name', optionsValue : 'name' "></select>
+    <a href="javscript:void(0)" class='btn btn-success btn-large pull-right' data-bind="click : do_order, css : { 'disabled' : !can_order() }">Добавить к счету</a>
+  </div>  
+</div>
+
+
+
