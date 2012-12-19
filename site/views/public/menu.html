@@ -50,12 +50,12 @@
       <div class='span9' >
         <ul class="row thumbnails" data-bind="foreach : dishes">
           <li class='span3' style="margin-bottom : 20px">
-              <div class="thumbnail">
+              <div class="thumbnail" data-bind="click : $parent.add_item">
                   <img src="http://placehold.it/260x180" alt="260x180" style="width: 260px; height: 180px;">
                   <div class="caption">
                    <p data-bind="text : name" style="height: 50px;"></p>
                     <p>
-                      <a href="#" class="btn btn-mini" data-bind="click : $parent.remove_item"><i class="icon-minus"></i></a> 
+                      <a href="#" class="btn btn-mini" data-bind="click : $parent.remove_item, clickBubble: false"><i class="icon-minus"></i></a> 
                       <a href="#" data-bind="click : $parent.add_item" class="btn btn-mini"><i class="icon-plus"></i></a>
 
                       <span class="badge badge-warning" data-bind="text : price">0</span>
