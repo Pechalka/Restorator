@@ -4,12 +4,23 @@ define(["knockout", "jquery",
 
     "sammy"
 
+,"text!views/tables.html", "view_models/tables.js"
+
+
+,"text!views/dishes.html", "view_models/dishes.js"
+
 	],function(ko, $, 
 
 		render,
 
 
-		Sammy) {
+		Sammy
+
+,tablesHtml, tablesViewModel
+
+,dishesHtml, dishesViewModel
+
+		) {
 		
 	return Sammy(function(){
 		var app = this;
@@ -20,7 +31,15 @@ define(["knockout", "jquery",
         this.get('admin.html#tables', function () {
         	app.currentPage('tables');
 			$.get('/api/tables', function(data){
-				render(app.content, "tables", data);
+				//render(app.content, "tables", data);
+
+
+					app.content({
+						data : new tablesViewModel(data),
+						html : tablesHtml
+					});
+
+
 			});
         });
 
@@ -29,7 +48,13 @@ define(["knockout", "jquery",
 			app.currentPage('menu');
 
 	
-			render(app.content, "dishes");
+		//	render(app.content, "dishes");
+
+					app.content({
+						data : new dishesViewModel({}),
+						html : dishesHtml
+					});
+
         });
 
 

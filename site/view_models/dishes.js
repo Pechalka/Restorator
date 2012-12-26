@@ -1,6 +1,11 @@
-define(["knockout", "jquery", "ko.mapping", "render"]
+define(["knockout", "jquery", "ko.mapping", "render", "text!views/new_category.html", "view_models/new_category.js"]
 	
-,	function(ko, $, mapping, render) {
+,	function(ko, $, mapping, render,
+
+NewCategoryHtml,
+NewCategoryViewMode
+
+	) {
 	
 	return function(){
 		var self = this;
@@ -57,12 +62,25 @@ define(["knockout", "jquery", "ko.mapping", "render"]
 
 
 		self.add_category = function(){
-			render(self.popup, "new_category", {
+			// render(self.popup, "new_category", {
+			// 	on_save : function(){
+			// 		self.fetch_categories();
+			// 		$('#popup').modal('hide');
+			// 	}
+			// });
+
+			var model = {
 				on_save : function(){
 					self.fetch_categories();
 					$('#popup').modal('hide');
 				}
-			});
+			};
+
+			self.popup({
+					data : new NewCategoryViewMode(model),
+					html : NewCategoryHtml
+				});
+
 			$('#popup').modal('show');
 		}
 
